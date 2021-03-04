@@ -1,29 +1,31 @@
-
-
+import 'package:barber_shop_flutter/views/DetalheProfissional.dart';
 import 'package:barber_shop_flutter/views/Home.dart';
 import 'package:barber_shop_flutter/views/Login.dart';
+import 'package:barber_shop_flutter/views/Profissional.dart';
+import 'package:barber_shop_flutter/views/Servicos.dart';
 import 'package:flutter/material.dart';
 
-class RouteGenerator{
+class RouteGenerator {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
 
-  static Route<dynamic> generateRoute(RouteSettings settings){
+    final args = settings.arguments;
 
-    switch(settings.name){
-
+    switch (settings.name) {
       case "/":
-        return MaterialPageRoute(
-            builder: (_) => Login()
-        );
+        return MaterialPageRoute(builder: (_) => Login());
 
-      case "home":
-        return MaterialPageRoute(
-            builder: (_) => Home()
-        );
+      case "/home":
+        return MaterialPageRoute(builder: (_) => Home());
+
+      case "/Serviços":
+        return MaterialPageRoute(builder: (_) => Servicos());
+
+        case "/Profissional":
+        return MaterialPageRoute(builder: (_) => Profissional());
+
+      case "/detalhes":
+        return MaterialPageRoute(builder: (_) => DetalheProfissional());
 
     }
-
-
   }
-
-
 }
