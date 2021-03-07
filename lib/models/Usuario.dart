@@ -7,8 +7,10 @@ class Usuario{
   String _email;
   String _phoneNumber;
   String _password;
-  List<String> _photos;
+  String  _photos;
+  String _descricao;
   bool _status;
+  String _type;
 
   Usuario();
   
@@ -17,9 +19,20 @@ class Usuario{
     this.name        = documentSnapshot["name"];
     this.email       = documentSnapshot["email"];
     this.phoneNumber = documentSnapshot["phoneNumber"];
-    this.photos      = List<String>.from(documentSnapshot["photos"]); //recupera como map mas precisa conterter para List
+    this.photos      = documentSnapshot["photos"];
+    this.descricao   = documentSnapshot["descricao"];
     this.status      = documentSnapshot["status"];
-    
+    this.type        = documentSnapshot["type"];
+
+  }
+
+  Usuario.gerarId(){
+
+  /*  FirebaseFirestore db = FirebaseFirestore.instance;
+    CollectionReference usuarios = db.collection("usuarios");
+    this.id = usuarios.doc().id;*/
+   // this.photos = ["null"];
+
   }
 
   Map<String, dynamic> toMap(){
@@ -31,7 +44,9 @@ class Usuario{
       "email"       : this.email,
       "phoneNumber" : this.phoneNumber,
       "photos"      : this.photos,
+      "descricao"   : this.descricao,
       "status"      : this.status,
+      "type"        : this.type,
     };
 
     return map;
@@ -61,9 +76,10 @@ class Usuario{
     _name = value;
   }
 
-  List<String> get photos => _photos;
 
-  set photos(List<String> value) {
+  String get photos => _photos;
+
+  set photos(String value) {
     _photos = value;
   }
 
@@ -77,5 +93,17 @@ class Usuario{
 
   set status(bool value) {
     _status = value;
+  }
+
+  String get descricao => _descricao;
+
+  set descricao(String value) {
+    _descricao = value;
+  }
+
+  String get type => _type;
+
+  set type(String value) {
+    _type = value;
   }
 }

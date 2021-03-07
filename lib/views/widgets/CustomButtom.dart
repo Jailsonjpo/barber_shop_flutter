@@ -1,3 +1,4 @@
+import 'package:barber_shop_flutter/main.dart';
 import 'package:flutter/material.dart';
 
 class CustomButtom extends StatelessWidget {
@@ -17,7 +18,8 @@ class CustomButtom extends StatelessWidget {
         style: TextStyle(color: this.corTexto, fontSize: 20
         ),
         ),
-        color: Color(0xff9c27b0),
+        color: temaPadrao.textSelectionColor,
+
         padding: EdgeInsets.fromLTRB(32, 16, 32, 16),
         onPressed: this.onPressed,
 

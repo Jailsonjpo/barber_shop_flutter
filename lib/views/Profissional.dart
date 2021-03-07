@@ -1,9 +1,9 @@
-import 'dart:async';
 import 'package:barber_shop_flutter/main.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:barber_shop_flutter/models/Usuario.dart';
 import 'package:barber_shop_flutter/views/widgets/ItemProfissional.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class Profissional extends StatefulWidget {
   @override
@@ -11,131 +11,99 @@ class Profissional extends StatefulWidget {
 }
 
 class _ProfissionalState extends State<Profissional> {
+  String _idUsuarioLogado;
+  String _emailUsuarioLogado;
 
-  final _controller = StreamController<QuerySnapshot>.broadcast();
-
-
-  Future<List<Usuario>> _recuperarProfissionais() async{
-
+  Future<List<Usuario>> _recuperarContatos() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
 
     QuerySnapshot querySnapshot = await db.collection("usuarios").get();
 
     List<Usuario> listaUsuarios = List();
-
     for (DocumentSnapshot item in querySnapshot.docs) {
-
       var dados = item.data();
+     // if (dados["email"] == _emailUsuarioLogado) continue;
 
-      Usuario usuario     = Usuario();
-      usuario.id          = item.id;
-      usuario.email       = dados["email"];
-      usuario.name        = dados["name"];
-      usuario.phoneNumber = dados["phoneNumber"];
+      Usuario usuario = Usuario();
+      usuario.id = item.id;
+      usuario.email = dados["email"];
+      usuario.name = dados["name"];
       usuario.photos = dados["photos"];
+      usuario.status = dados["status"];
+      usuario.descricao = dados["descricao"];
+      usuario.phoneNumber = dados["phoneNumber"];
+
       listaUsuarios.add(usuario);
 
-      print("saida de dados: ${listaUsuarios.toString()}");
+    //  print("${listaUsuarios.toString()}");
 
     }
+
+    return listaUsuarios;
   }
 
-  Future<Stream<QuerySnapshot>> _adicionarListenerProfissionais() async {
-    FirebaseFirestore db = FirebaseFirestore.instance;
+  _recuperarDadosUsuario() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User usuarioLogado = await auth.currentUser;
+    _idUsuarioLogado = usuarioLogado.uid;
+    _emailUsuarioLogado = usuarioLogado.email;
 
-    Stream<QuerySnapshot> stream = db.collection("usuarios").snapshots();
-
-    stream.listen((dados) {
-      _controller.add(dados);
-    });
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _adicionarListenerProfissionais();
-
+    _recuperarDadosUsuario();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    var carregandoDados = Center(
-      child: Column(
-        children: [
-          Text("Carregando Profissioanis"),
-          CircularProgressIndicator()
-        ],
-      ),
-    );
-
     return Scaffold(
       backgroundColor: temaPadrao.primaryColor,
-      appBar: AppBar(title: Text("Profissional"),
-      backgroundColor: temaPadrao.accentColor,
+      appBar: AppBar(
+        backgroundColor: temaPadrao.accentColor,
+          title: Text("Profissionais", style: TextStyle(fontSize: 20),)
 
       ),
+        body: FutureBuilder<List<Usuario>>(
+        future: _recuperarContatos(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return Center(
+                child: Column(
+                  children: <Widget>[
+                    Text("Carregando contatos"),
+                    CircularProgressIndicator()
+                  ],
+                ),
+              );
+              break;
+            case ConnectionState.active:
+            case ConnectionState.done:
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (_, indice) {
+                    List<Usuario> listaItens = snapshot.data;
+                    Usuario usuario = listaItens[indice];
 
-      body: Container(
+                    return ItemProfissional(
+                      usuario: usuario,
+                      onTapItem: () {
+                        Navigator.pushNamed(
+                            context, "/detalhes",
+                            arguments: usuario);
+                      },
+                    );
 
-          child: Column(
-            children: [
-            StreamBuilder(
-                stream: _controller.stream,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                    case ConnectionState.waiting:
-
-                      return carregandoDados;
-                      break;
-
-                    case ConnectionState.active:
-                    case ConnectionState.done:
-                      QuerySnapshot querySnapshot = snapshot.data;
-
-                      if (querySnapshot.docs.length == 0) {
-                        return Container(
-                          padding: EdgeInsets.all(25),
-                          child: Text(
-                            "nenhum Profissional encontrado! :(",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        );
-                      }
-
-                      return Expanded(
-                          child: ListView.builder(
-                              itemCount: querySnapshot.docs.length,
-                              itemBuilder: (_, indice) {
-                                List<DocumentSnapshot> usuarios =
-                                querySnapshot.docs.toList();
-                                DocumentSnapshot documentSnapshot =
-                                usuarios[indice];
-                                Usuario usuario = Usuario.fromDocumentSnapshot(
-                                    documentSnapshot);
-
-                                return ItemProfissional(
-                                  usuario: usuario,
-                                  onTapItem: () {
-                                    Navigator.pushNamed(
-                                        context, "/detalhes",);
-                                  },
-                                );
-                              }));
-                  }
-
-                  return Container();
-                }),
-            ],
-          )
-
-
-      ),
-
-
-    );
+                  });
+              break;
+          }
+          return Container();
+        },
+    ),
+      );
   }
 }
+

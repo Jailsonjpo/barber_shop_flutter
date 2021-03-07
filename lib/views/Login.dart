@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:barber_shop_flutter/main.dart';
 import 'package:barber_shop_flutter/models/Usuario.dart';
 import 'package:barber_shop_flutter/views/widgets/CustomButtom.dart';
 import 'package:barber_shop_flutter/views/widgets/CustomInput.dart';
@@ -10,10 +13,10 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController _controllerEmail = TextEditingController();
-  TextEditingController _controllerPassword = TextEditingController();
+  TextEditingController _controllerEmail = TextEditingController(text: "j@g.com");
+  TextEditingController _controllerPassword = TextEditingController(text: "123456");
 
-  bool _cadastrar = false;
+ // bool _cadastrar = false;
   String _mensagemErro = "";
   String _textoBotao = "Entrar";
 
@@ -24,6 +27,7 @@ class _LoginState extends State<Login> {
         .createUserWithEmailAndPassword(
             email: usuario.email, password: usuario.password)
         .then((firebaseUser) {
+
       Navigator.pushReplacementNamed(context, "/home");
     });
   }
@@ -34,6 +38,7 @@ class _LoginState extends State<Login> {
         .signInWithEmailAndPassword(
             email: usuario.email, password: usuario.password)
         .then((firebaseUser) {
+
       Navigator.pushReplacementNamed(context, "/home");
     }).catchError((error) {
       setState(() {
@@ -58,12 +63,8 @@ class _LoginState extends State<Login> {
         usuario.email = email;
         usuario.password = password;
 
-        //Cadastrar ou logar
-        if (_cadastrar) {
-          _registerUser(usuario);
-        } else {
           _loginUser(usuario);
-        }
+
       } else {
         setState(() {
           _mensagemErro = "Preencha a senha!";
@@ -94,6 +95,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: temaPadrao.primaryColor,
       body: Container(
         padding: EdgeInsets.all(16),
         child: Center(
@@ -115,33 +117,28 @@ class _LoginState extends State<Login> {
                   autofocus: true,
                   type: TextInputType.emailAddress,
                 ),
+                SizedBox(height: 10,),
                 CustomInput(
                   controller: _controllerPassword,
                   hint: "Senha",
                   obscure: true,
                 ),
-                Row(
-                  children: [
-                    Text("Logar"),
-                    Switch(
-                        value: _cadastrar,
-                        onChanged: (bool valor) {
-                          setState(() {
-                            _cadastrar = valor;
-                            _textoBotao = "Entrar";
 
-                            if (_cadastrar) {
-                              _textoBotao = "Cadastrar";
-                            }
-                          });
-                        }),
-                    Text("Cadastrar"),
-                  ],
-                ),
+                SizedBox(height: 20,),
+
                 CustomButtom(
                   texto: _textoBotao,
                   onPressed: () {
                     _validarCampos();
+                  },
+                ),
+
+                SizedBox(height: 20,),
+
+                CustomButtom(
+                  texto: "Cadastrar",
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/cadastrar");
                   },
                 ),
                 Padding(

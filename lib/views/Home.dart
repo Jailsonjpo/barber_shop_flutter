@@ -1,17 +1,21 @@
 import 'package:barber_shop_flutter/main.dart';
 import 'package:barber_shop_flutter/models/Usuario.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+
   List<String> itensMenu = [];
   Usuario _usuario;
+  String _tipoUsuario;
 
   /*List<Widget> _getListImages() {
 
@@ -20,17 +24,121 @@ class _HomeState extends State<Home> {
   _choiceMenuItem(String itemChosen) {
     switch (itemChosen) {
       case "Configurações":
+        Navigator.pushNamed(context, "/configuracoes");
         break;
 
-      case "Deslogar":
+     /* case "Perfil":
         _logout();
-        break;
+       break;
+*/
+      case "Deslogar":
+              _logout();
+              break;
+
     }
   }
 
-  Future _itemsmenu() async {
-    itensMenu = await ["Configurações", "Deslogar"];
+  _redirecionaPainelPorTipoUsuario() async{
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User usuarioLogado = await auth.currentUser;
+
+    print("tipo ${usuarioLogado.uid.toString()}");
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+  //  print("tipo ${usuarioLogado.uid}");
+
+  /*  DocumentSnapshot snapshot = await db.collection("usuarios").doc(usuarioLogado.uid).get();
+
+    Map<String, dynamic> dados = snapshot.data();
+
+    _tipoUsuario = dados["type"].toString();*/
+
+   // print("tipo ${_tipoUsuario}");
+
+    //return _tipoUsuario;
+
+   // _itemsmenu(_tipoUsuario.toString());
+
+   /* switch(tipoUsuario){
+
+      case "C":
+        itensMenu = await ["Configurações", "Deslogar"];
+        break;
+
+      case "P":
+        itensMenu = await ["Configurações", "Perfil", "Deslogar"];
+        break;
+
+    }*/
+
   }
+
+  Future _itemsmenu() async {
+
+    itensMenu = await ["Configurações", "Deslogar"];
+    /*if (_tipo == "C") {
+    itensMenu = await ["Configurações", "Deslogar"];
+    }else{
+    itensMenu = await ["Configurações", "Perfil", "Deslogar"];
+    }*/
+
+  }
+
+
+ /* Future<void> _checkUserLogged() async {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User usuarioLogado = await auth.currentUser;
+
+    CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('usuarios').doc(usuarioLogado);
+
+    // Get docs from collection reference
+    QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    // Get data from docs and convert map to List
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    _usuario = allData;
+
+    if (allData) {
+
+    }
+
+    print("motrar todos os dados: ${allData}");
+  }*/
+
+
+
+ /* Future _verificaUsuarioLogado() async {
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User usuarioLogado = await auth.currentUser;
+
+    FirebaseFirestore db = FirebaseFirestore.instance;
+
+    QuerySnapshot querySnapshot = await db.collection("usuarios").doc(usuarioLogado);
+
+    print("usuario: ${usuarioLogado}");
+
+    if (usuarioLogado == null) {
+      itensMenu = ["Entrar / Cadastrar"];
+    } else {
+      itensMenu = ["Meus Anúncios", "Deslogar"];
+    }
+  }
+*/
+ /* Future _checkUserLogged() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User usuarioLogado = await auth.currentUser;
+
+    usuarioLogado.
+
+    if (usuarioLogado != null) {
+      Navigator.pushReplacementNamed(context, "/home");
+    }
+  }*/
 
   _logout() async {
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -41,6 +149,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     // TODO: implement initState
+    _redirecionaPainelPorTipoUsuario();
+  //  _checkUserLogged();
     _itemsmenu();
     super.initState();
   }

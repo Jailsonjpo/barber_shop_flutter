@@ -10,7 +10,7 @@ class ItemProfissional extends StatelessWidget {
   VoidCallback onPressedRemover;
 
   ItemProfissional({
-    @required this.usuario,
+    this.usuario,
     this.onTapItem,
     this.onPressedRemover
 
@@ -18,6 +18,9 @@ class ItemProfissional extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+   // print("name ${usuario.name}");
+
     return GestureDetector(
       onTap: this.onTapItem,
       child: Card(
@@ -34,9 +37,11 @@ class ItemProfissional extends StatelessWidget {
                  Container(
                    child: CircleAvatar(
                        maxRadius: 60,
-                       backgroundImage: usuario.photos[0] != null
-                           ? NetworkImage(usuario.photos[0])
-                           : null),
+                       backgroundImage:
+                       usuario.photos != null
+                           ? NetworkImage(usuario.photos)
+                           : NetworkImage("https://banner2.cleanpng.com/20180410/bbw/kisspng-avatar-user-medicine-surgery-patient-avatar-5acc9f7a7cb983.0104600115233596105109.jpg")
+                   ),
                  ),
 
                  Container(
@@ -45,7 +50,6 @@ class ItemProfissional extends StatelessWidget {
                    width: 20.0,
                    decoration: BoxDecoration(
                        borderRadius: BorderRadius.circular(30.0),
-
                        color: usuario.status ? Colors.green : Colors.amber,
                        border: Border.all(
                            color: Colors.white,

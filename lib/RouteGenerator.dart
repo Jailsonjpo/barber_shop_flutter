@@ -1,3 +1,5 @@
+import 'package:barber_shop_flutter/views/Cadastrar.dart';
+import 'package:barber_shop_flutter/views/Configuracoes.dart';
 import 'package:barber_shop_flutter/views/DetalheProfissional.dart';
 import 'package:barber_shop_flutter/views/Home.dart';
 import 'package:barber_shop_flutter/views/Login.dart';
@@ -24,7 +26,13 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Profissional());
 
       case "/detalhes":
-        return MaterialPageRoute(builder: (_) => DetalheProfissional());
+        return MaterialPageRoute(builder: (_) => DetalheProfissional(args));
+
+      case "/cadastrar":
+        return MaterialPageRoute(builder: (_) => Cadastrar());
+
+      case "/configuracoes":
+        return MaterialPageRoute(builder: (_) => Configuracoes());
 
     }
   }

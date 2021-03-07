@@ -1,3 +1,4 @@
+import 'package:barber_shop_flutter/main.dart';
 import 'package:flutter/material.dart';
 
 class Servicos extends StatefulWidget {
@@ -9,7 +10,10 @@ class _ServicosState extends State<Servicos> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Serviços"),),
+      backgroundColor: temaPadrao.primaryColor,
+      appBar: AppBar(title: Text("Serviços"),
+      backgroundColor: temaPadrao.accentColor,
+      ),
     );
   }
 }
