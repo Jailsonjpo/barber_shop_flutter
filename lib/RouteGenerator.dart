@@ -35,5 +35,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Configuracoes());
 
     }
+
+    return null;
   }
 }

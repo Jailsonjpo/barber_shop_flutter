@@ -27,10 +27,10 @@ class _HomeState extends State<Home> {
         Navigator.pushNamed(context, "/configuracoes");
         break;
 
-     /* case "Perfil":
+      case "Perfil":
         _logout();
        break;
-*/
+
       case "Deslogar":
               _logout();
               break;
@@ -225,7 +225,7 @@ class _HomeState extends State<Home> {
                     Text("Promoção: Corte R\$\ 29,90",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w700, fontFamily: 'Quicksand', color: Color(0xffc6c6c6),)),
+                            fontSize: 18, fontWeight: FontWeight.w700, fontFamily: 'Quicksand', color: temaPadrao.textSelectionColor,)),
                   ],
                 )),
             SizedBox(height: 12.0),
@@ -281,20 +281,6 @@ class _HomeState extends State<Home> {
                           )
                       ),
                     ),
-                   /* Container(
-                      margin: EdgeInsets.only(left: 40.0),
-                      height: 20.0,
-                      width: 20.0,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          color: status == 'Away' ? Colors.amber : Colors.green,
-                          border: Border.all(
-                              color: Colors.white,
-                              style: BorderStyle.solid,
-                              width: 2.0
-                          )
-                      ),
-                    )*/
                   ]),
               SizedBox(height: 8.0),
               Text(
@@ -306,17 +292,8 @@ class _HomeState extends State<Home> {
                   fontSize: 15.0,
                 ),
               ),
-              SizedBox(height: 5.0),
-             /* Text(
-                status,
-                style: TextStyle(
-                    fontFamily: 'Quicksand',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.0,
-                    color: Colors.grey
-                ),
-              ),*/
-              SizedBox(height: 15.0),
+
+              SizedBox(height: 20.0),
               Expanded(
                   child: Container(
                       width: 175.0,

@@ -2,7 +2,6 @@ import 'package:barber_shop_flutter/main.dart';
 import 'package:barber_shop_flutter/models/Usuario.dart';
 import 'package:flutter/material.dart';
 
-
 class ItemProfissional extends StatelessWidget {
 
   Usuario usuario;
@@ -18,8 +17,6 @@ class ItemProfissional extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-   // print("name ${usuario.name}");
 
     return GestureDetector(
       onTap: this.onTapItem,

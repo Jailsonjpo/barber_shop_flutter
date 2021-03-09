@@ -162,7 +162,8 @@ class _ConfiguracoesState extends State<Configuracoes> {
                   backgroundColor: Colors.grey,
                   backgroundImage: _urlImagemRecuperada != null
                       ? NetworkImage(_urlImagemRecuperada)
-                      : NetworkImage("https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg")),
+                      : AssetImage("images/avatar.png")
+                      ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
