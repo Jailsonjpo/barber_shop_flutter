@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class CustomButtom extends StatelessWidget {
   final String texto;
   final Color corTexto;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   CustomButtom(
-      {@required this.texto, this.corTexto = Colors.white, this.onPressed});
+      {required this.texto, this.corTexto = Colors.white, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

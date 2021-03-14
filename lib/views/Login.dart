@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
 
     auth
         .createUserWithEmailAndPassword(
-            email: usuario.email, password: usuario.password)
+            email: usuario.email!, password: usuario.password!)
         .then((firebaseUser) {
 
       Navigator.pushReplacementNamed(context, "/home");
@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
     FirebaseAuth auth = FirebaseAuth.instance;
     auth
         .signInWithEmailAndPassword(
-            email: usuario.email, password: usuario.password)
+            email: usuario.email!, password: usuario.password!)
         .then((firebaseUser) {
 
       Navigator.pushReplacementNamed(context, "/home");
@@ -79,7 +79,7 @@ class _LoginState extends State<Login> {
 
   Future _checkUserLogged() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User usuarioLogado = await auth.currentUser;
+    User? usuarioLogado = await auth.currentUser;
 
     if (usuarioLogado != null) {
       Navigator.pushReplacementNamed(context, "/home");

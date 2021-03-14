@@ -1,6 +1,5 @@
 import 'package:barber_shop_flutter/main.dart';
 import 'package:barber_shop_flutter/models/Usuario.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +13,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   List<String> itensMenu = [];
-  Usuario _usuario;
-  String _tipoUsuario;
+  Usuario? _usuario;
+  String? _tipoUsuario;
+
 
   /*List<Widget> _getListImages() {
 
@@ -27,8 +27,8 @@ class _HomeState extends State<Home> {
         Navigator.pushNamed(context, "/configuracoes");
         break;
 
-      case "Perfil":
-        _logout();
+      case "Serviços":
+       Navigator.pushNamed(context, "/editarServicos",);
        break;
 
       case "Deslogar":
@@ -41,9 +41,9 @@ class _HomeState extends State<Home> {
   _redirecionaPainelPorTipoUsuario() async{
 
     FirebaseAuth auth = FirebaseAuth.instance;
-    User usuarioLogado = await auth.currentUser;
+    User? usuarioLogado = await auth.currentUser;
 
-    print("tipo ${usuarioLogado.uid.toString()}");
+  //  print("tipo ${usuarioLogado.uid.toString()}");
     FirebaseFirestore db = FirebaseFirestore.instance;
 
   //  print("tipo ${usuarioLogado.uid}");
@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
 
   Future _itemsmenu() async {
 
-    itensMenu = await ["Configurações", "Deslogar"];
+    itensMenu = await ["Configurações", "Serviços", "Deslogar"];
     /*if (_tipo == "C") {
     itensMenu = await ["Configurações", "Deslogar"];
     }else{
@@ -187,7 +187,15 @@ class _HomeState extends State<Home> {
                   children: [
                     SizedBox(
                       height: 250,
-                      child: Carousel(
+                      child: Container(
+                        height: 250,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage('https://hinova.com.br/wp-content/uploads/2017/07/Barbearia.jpg'), fit: BoxFit.cover
+                            )
+                        ),
+                      )
+                    /*  Carousel(
                         dotSize: 8,
                         dotBgColor: Colors.transparent,
                         dotColor: Colors.red,
@@ -207,7 +215,7 @@ class _HomeState extends State<Home> {
                         ],
 
                         //dotIncreasedColor: temaPadrao.primaryColor,
-                      ),
+                      ),*/
                     )
                   ],
                 ),

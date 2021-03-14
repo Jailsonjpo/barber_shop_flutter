@@ -2,15 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Usuario{
 
-  String _id;
-  String _name;
-  String _email;
-  String _phoneNumber;
-  String _password;
-  String  _photos;
-  String _descricao;
-  bool _status;
-  String _type;
+  String? _id;
+  String? _name;
+  String? _email;
+  String? _phoneNumber;
+  String? _password;
+  String?  _photos;
+  String? _descricao;
+  bool? _status;
+  String? _type;
 
   Usuario();
   
@@ -52,58 +52,58 @@ class Usuario{
     return map;
  }
 
-  String get password => _password;
+  String? get password => _password;
 
-  set password(String value) {
+  set password(String? value) {
     _password = value;
   }
 
-  String get phoneNumber => _phoneNumber;
+  String? get phoneNumber => _phoneNumber;
 
-  set phoneNumber(String value) {
+  set phoneNumber(String? value) {
     _phoneNumber = value;
   }
 
-  String get email => _email;
+  String? get email => _email;
 
-  set email(String value) {
+  set email(String? value) {
     _email = value;
   }
 
-  String get name => _name;
+  String? get name => _name;
 
-  set name(String value) {
+  set name(String? value) {
     _name = value;
   }
 
 
-  String get photos => _photos;
+  String? get photos => _photos;
 
-  set photos(String value) {
+  set photos(String? value) {
     _photos = value;
   }
 
-  String get id => _id;
+  String? get id => _id;
 
-  set id(String value) {
+  set id(String? value) {
     _id = value;
   }
 
-  bool get status => _status;
+  bool? get status => _status;
 
-  set status(bool value) {
+  set status(bool? value) {
     _status = value;
   }
 
-  String get descricao => _descricao;
+  String? get descricao => _descricao;
 
-  set descricao(String value) {
+  set descricao(String? value) {
     _descricao = value;
   }
 
-  String get type => _type;
+  String? get type => _type;
 
-  set type(String value) {
+  set type(String? value) {
     _type = value;
   }
 }

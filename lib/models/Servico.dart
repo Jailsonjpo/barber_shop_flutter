@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Servico{
 
-  String _id;
-  String _serviceName;
-  String _valorServico;
+  String? _id;
+  String? _serviceName;
+  String? _valorServico;
 
   Servico();
 
@@ -32,21 +32,21 @@ class Servico{
 
   }
 
-  String get valorServico => _valorServico;
+  String? get valorServico => _valorServico;
 
-  set valorServico(String value) {
+  set valorServico(String? value) {
     _valorServico = value;
   }
 
-  String get serviceName => _serviceName;
+  String? get serviceName => _serviceName;
 
-  set serviceName(String value) {
+  set serviceName(String? value) {
     _serviceName = value;
   }
 
-  String get id => _id;
+  String? get id => _id;
 
-  set id(String value) {
+  set id(String? value) {
     _id = value;
   }
 

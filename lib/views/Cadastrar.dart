@@ -21,19 +21,19 @@ class _CadastrarState extends State<Cadastrar> {
   bool _cadastrar = false;
   String _mensagemErro = "";
   String _type = "C";
-  Usuario _usuario;
+  Usuario? _usuario;
 
   _registerUser(Usuario usuario) async {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     auth
         .createUserWithEmailAndPassword(
-            email: usuario.email, password: usuario.password)
+            email: usuario.email!, password: usuario.password!)
         .then((firebaseUser) {
 
       //Salvar dados do usuário
       FirebaseFirestore db = FirebaseFirestore.instance;
-      db.collection("usuarios").doc(firebaseUser.user.uid).set(usuario.toMap());
+      db.collection("usuarios").doc(firebaseUser.user!.uid).set(usuario.toMap());
 
       Navigator.pushNamedAndRemoveUntil(context, "/home", (_) => false);
     }).catchError((error) {

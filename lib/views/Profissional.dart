@@ -11,17 +11,17 @@ class Profissional extends StatefulWidget {
 }
 
 class _ProfissionalState extends State<Profissional> {
-  String _idUsuarioLogado;
-  String _emailUsuarioLogado;
+  String? _idUsuarioLogado;
+  String? _emailUsuarioLogado;
 
   Future<List<Usuario>> _recuperarContatos() async {
     FirebaseFirestore db = FirebaseFirestore.instance;
 
     QuerySnapshot querySnapshot = await db.collection("usuarios").get();
 
-    List<Usuario> listaUsuarios = List();
+    List<Usuario> listaUsuarios = [];
     for (DocumentSnapshot item in querySnapshot.docs) {
-      var dados = item.data();
+      var dados = item.data()!;
      // if (dados["email"] == _emailUsuarioLogado) continue;
 
       Usuario usuario = Usuario();
@@ -42,9 +42,9 @@ class _ProfissionalState extends State<Profissional> {
     return listaUsuarios;
   }
 
-  _recuperarDadosUsuario() async {
+  Future _recuperarDadosUsuario() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User usuarioLogado = await auth.currentUser;
+    User usuarioLogado = await auth.currentUser!;
     _idUsuarioLogado = usuarioLogado.uid;
     _emailUsuarioLogado = usuarioLogado.email;
 
@@ -83,9 +83,9 @@ class _ProfissionalState extends State<Profissional> {
             case ConnectionState.active:
             case ConnectionState.done:
               return ListView.builder(
-                  itemCount: snapshot.data.length,
+                  itemCount: snapshot.data!.length,
                   itemBuilder: (_, indice) {
-                    List<Usuario> listaItens = snapshot.data;
+                    List<Usuario> listaItens = snapshot.data!;
                     Usuario usuario = listaItens[indice];
 
                     return ItemProfissional(

@@ -16,10 +16,10 @@ class _ServicosState extends State<Servicos> {
 
     QuerySnapshot querySnapshot = await db.collection("servicos").get();
 
-    List<Servico> listaServicos = List();
+    List<Servico> listaServicos = [];
 
     for (DocumentSnapshot item in querySnapshot.docs) {
-      var dados = item.data();
+      var dados = item.data()!;
 
       Servico servico = Servico();
 
@@ -56,9 +56,15 @@ class _ServicosState extends State<Servicos> {
             case ConnectionState.waiting:
               return Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Carregando contatos"),
-                    CircularProgressIndicator()
+                    Text("Carregando Serviços", style: TextStyle(
+
+                    fontSize: 20, fontWeight: FontWeight.w800, color: Colors.white
+                    ),),
+                    CircularProgressIndicator(
+                      backgroundColor: temaPadrao.textSelectionColor,
+                    )
                   ],
                 ),
               );
@@ -66,9 +72,9 @@ class _ServicosState extends State<Servicos> {
             case ConnectionState.active:
             case ConnectionState.done:
               return ListView.builder(
-                  itemCount: snapshot.data.length,
+                  itemCount: snapshot.data!.length,
                   itemBuilder: (_, indice) {
-                    List<Servico> listaItens = snapshot.data;
+                    List<Servico> listaItens = snapshot.data!;
                     Servico servico = listaItens[indice];
 
                     return ItemServico(

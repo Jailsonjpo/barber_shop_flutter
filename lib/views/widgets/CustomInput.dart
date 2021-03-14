@@ -8,13 +8,13 @@ class CustomInput extends StatelessWidget {
   final bool autofocus;
   final TextInputType type;
   final int maxLines;
-  final List<TextInputFormatter> inputFormatters;
-  final Function(String) validator;
-  final Function(String) onSaved;
+  final List<TextInputFormatter>? inputFormatters;
+  final Function(String)? validator;
+  final Function(String?)? onSaved;
 
   CustomInput({
-      @required this.controller,
-      @required this.hint,
+      required this.controller,
+      required this.hint,
       this.obscure = false,
       this.autofocus = false,
       this.type = TextInputType.text,
@@ -32,7 +32,7 @@ class CustomInput extends StatelessWidget {
       keyboardType: this.type,
       obscureText: this.obscure,
       inputFormatters: this.inputFormatters,
-      validator: this.validator,
+      validator: this.validator as String? Function(String?)?,
       maxLines: this.maxLines,
       onSaved: this.onSaved,
       style: TextStyle(fontSize: 20),

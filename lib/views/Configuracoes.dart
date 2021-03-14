@@ -17,21 +17,25 @@ class _ConfiguracoesState extends State<Configuracoes> {
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerPhoneNumber = TextEditingController();
   TextEditingController _controllerDescricao = TextEditingController();
-  File _imagem;
-  String _idUsuarioLogado;
+  File? _imagem;
+  String? _idUsuarioLogado;
   bool _subindoImagem = false;
-  String _urlImagemRecuperada;
+  String? _urlImagemRecuperada;
+  final _picker = ImagePicker();
+  PickedFile? _imagemSelecionada;
 
   Future _recuperarImagem(String origemImagem) async {
-    File imagemSelecionada;
+    File? imagemSelecionada;
+
     switch (origemImagem) {
-      case "camera":
-        imagemSelecionada =
-            await ImagePicker.pickImage(source: ImageSource.camera);
+
+    case "camera":
+      final _imagemSelecionada =
+            await _picker.getImage(source: ImageSource.camera);
         break;
       case "galeria":
-        imagemSelecionada =
-            await ImagePicker.pickImage(source: ImageSource.gallery);
+        _imagemSelecionada =
+        await _picker.getImage(source: ImageSource.gallery);
         break;
     }
 
@@ -49,9 +53,9 @@ class _ConfiguracoesState extends State<Configuracoes> {
     FirebaseStorage storage = FirebaseStorage.instance;
     Reference pastaRaiz = storage.ref();
     Reference arquivo =
-        pastaRaiz.child("perfil").child(_idUsuarioLogado + ".jpg");
+        pastaRaiz.child("perfil").child(_idUsuarioLogado! + ".jpg");
 
-    UploadTask task = arquivo.putFile(_imagem);
+    UploadTask task = arquivo.putFile(_imagem!);
 
 // Optional
     task.snapshotEvents.listen((TaskSnapshot snapshot) {
@@ -110,14 +114,14 @@ class _ConfiguracoesState extends State<Configuracoes> {
 
   _recuperarDadosUsuario() async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    User usuarioLogado = await auth.currentUser;
+    User usuarioLogado = await auth.currentUser!;
     _idUsuarioLogado = usuarioLogado.uid;
 
     FirebaseFirestore db = FirebaseFirestore.instance;
     DocumentSnapshot snapshot =
         await db.collection("usuarios").doc(_idUsuarioLogado).get();
 
-    Map<String, dynamic> dados = snapshot.data();
+    Map<String, dynamic> dados = snapshot.data()!;
     _controllerNome.text = dados["name"];
     _controllerEmail.text = dados["email"];
     _controllerPhoneNumber.text = dados["phoneNumber"];
@@ -160,9 +164,9 @@ class _ConfiguracoesState extends State<Configuracoes> {
               CircleAvatar(
                   radius: 100,
                   backgroundColor: Colors.grey,
-                  backgroundImage: _urlImagemRecuperada != null
-                      ? NetworkImage(_urlImagemRecuperada)
-                      : AssetImage("images/avatar.png")
+                  backgroundImage: (_urlImagemRecuperada != null
+                      ? NetworkImage(_urlImagemRecuperada!)
+                      : AssetImage("images/avatar.jpg")) as ImageProvider<Object>?
                       ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

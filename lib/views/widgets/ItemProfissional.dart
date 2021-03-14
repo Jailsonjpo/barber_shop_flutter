@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class ItemProfissional extends StatelessWidget {
 
-  Usuario usuario;
-  VoidCallback onTapItem;
-  VoidCallback onPressedRemover;
+  Usuario? usuario;
+  VoidCallback? onTapItem;
+  VoidCallback? onPressedRemover;
 
   ItemProfissional({
     this.usuario,
@@ -35,8 +35,8 @@ class ItemProfissional extends StatelessWidget {
                    child: CircleAvatar(
                        maxRadius: 60,
                        backgroundImage:
-                       usuario.photos != null
-                           ? NetworkImage(usuario.photos)
+                       usuario!.photos != null
+                           ? NetworkImage(usuario!.photos!)
                            : NetworkImage("https://banner2.cleanpng.com/20180410/bbw/kisspng-avatar-user-medicine-surgery-patient-avatar-5acc9f7a7cb983.0104600115233596105109.jpg")
                    ),
                  ),
@@ -47,7 +47,7 @@ class ItemProfissional extends StatelessWidget {
                    width: 20.0,
                    decoration: BoxDecoration(
                        borderRadius: BorderRadius.circular(30.0),
-                       color: usuario.status ? Colors.green : Colors.amber,
+                       color: usuario!.status! ? Colors.green : Colors.amber,
                        border: Border.all(
                            color: Colors.white,
                            style: BorderStyle.solid,
@@ -69,14 +69,14 @@ class ItemProfissional extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Text(usuario.name,
+            Text(usuario!.name!,
             style: TextStyle(
               color: Color(0xffc6c6c6),
               fontSize: 18,
               fontWeight: FontWeight.bold
             ),),
             Padding(padding: EdgeInsets.only(bottom: 10)),
-            Text("${usuario.email}", style: TextStyle(
+            Text("${usuario!.email}", style: TextStyle(
                 color: Color(0xff867638),
 
             ),),

@@ -1,12 +1,11 @@
 import 'dart:ui';
 import 'package:barber_shop_flutter/main.dart';
 import 'package:barber_shop_flutter/models/Usuario.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetalheProfissional extends StatefulWidget {
-  Usuario usuario;
+  Usuario? usuario;
 
   DetalheProfissional(this.usuario);
 
@@ -16,9 +15,9 @@ class DetalheProfissional extends StatefulWidget {
 
 class _DetalheProfissionalState extends State<DetalheProfissional> {
 
-  Usuario _usuario;
+  Usuario? _usuario;
 
-  _ligarTelefone(String telefone) async {
+  _ligarTelefone(String? telefone) async {
     if (await canLaunch("tel:$telefone")) {
       await launch("tel:$telefone");
     } else {
@@ -51,7 +50,7 @@ class _DetalheProfissionalState extends State<DetalheProfissional> {
                   height: 250,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: _usuario.photos != null ? NetworkImage(_usuario.photos) : NetworkImage("https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg"), fit: BoxFit.cover
+                          image: _usuario!.photos != null ? NetworkImage(_usuario!.photos!) : NetworkImage("https://st3.depositphotos.com/1767687/16607/v/600/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg"), fit: BoxFit.cover
                       )
                   ),
                 )
@@ -62,7 +61,7 @@ class _DetalheProfissionalState extends State<DetalheProfissional> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "${_usuario.name}",
+                      "${_usuario!.name}",
                       style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -73,7 +72,7 @@ class _DetalheProfissionalState extends State<DetalheProfissional> {
                       child: Divider(),
                     ),
                     Text(
-                      "${_usuario.email}",
+                      "${_usuario!.email}",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -97,7 +96,7 @@ class _DetalheProfissionalState extends State<DetalheProfissional> {
                       child: Divider(),
                     ),
                     Text(
-                      "${_usuario.descricao}",
+                      "${_usuario!.descricao}",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
 
@@ -120,7 +119,7 @@ class _DetalheProfissionalState extends State<DetalheProfissional> {
                     Padding(
                       padding: EdgeInsets.only(bottom: 66),
                       child: Text(
-                        "${_usuario.phoneNumber}",
+                        "${_usuario!.phoneNumber}",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -151,7 +150,7 @@ class _DetalheProfissionalState extends State<DetalheProfissional> {
                       borderRadius: BorderRadius.circular(30)),
                 ),
                 onTap: () {
-                  _ligarTelefone(_usuario.phoneNumber);
+                  _ligarTelefone(_usuario!.phoneNumber);
                 },
               ))
 
